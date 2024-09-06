@@ -119,6 +119,7 @@ public class MenuPostalAtizapan {
         CodigoPostal myCodigo = new CodigoPostal(codigoPostal, asentamiento);
         myMunicipio.add(myCodigo);
         for (CodigoPostal postalito : myMunicipio) {
+            System.out.println();
             postalito.mostrarInformacion();
             System.out.println();
         }
