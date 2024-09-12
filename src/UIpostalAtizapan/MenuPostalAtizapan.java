@@ -4,24 +4,23 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MenuPostalAtizapan {
-
     static Scanner entrada = new Scanner(System.in);
     static ArrayList<CodigoPostal> myMunicipio = new ArrayList<>();
+    static int codigoPostalAtizapan[] = {52500, 52503, 52504, 52506};
 
     public static void postalMain() {
         UIMenuPostal();
     }
 
     public static void UIMenuPostal() {
-        int codigoPostalAtizapan[] = {52500, 52503, 52504, 52506};
         int response = 0;
+        int k = 0;
+        System.out.println("**********+Codigos Postales Disponibles**********+");
         do {
-            System.out.println("CODIGOS POSTALES");
-            System.out.println("1. -" + codigoPostalAtizapan[0]);
-            System.out.println("2. -" + codigoPostalAtizapan[1]);
-            System.out.println("3. -" + codigoPostalAtizapan[2]);
-            System.out.println("4. -" + codigoPostalAtizapan[3]);
-            System.out.println("5. - Salir");
+            for(Integer codigoPostal: codigoPostalAtizapan) {
+                k++;
+                System.out.println(k + ".-" + codigoPostal);
+            }
             System.out.println("Elige una opcion: ");
             response = entrada.nextInt();
             switch (response) {

@@ -1,17 +1,16 @@
 public class Vehiculos {
-    private String placa;
-    private int anio;
-    private String marca;
-    private String version;
-    private String transmision;
-    private boolean aireAcondicionado;
-    private boolean electrico;
-    private int claveVehicular;
-    private int capidadDeCarga;
-    private String fechaFactura;
-    private float importeFactura;
-    private int cilindros;
-    private String licencia;
+     String placa;
+     int anio;
+     String marca;
+     String version;
+     String transmision;
+     boolean aireAcondicionado;
+     boolean electrico;
+     int capidadDeCarga;
+     String fechaFactura;
+     float importeFactura;
+     int cilindros;
+     String licencia;
 
     public String getPlaca() {
         return placa;
@@ -67,14 +66,6 @@ public class Vehiculos {
 
     public void setElectrico(boolean electrico) {
         this.electrico = electrico;
-    }
-
-    public int getClaveVehicular() {
-        return claveVehicular;
-    }
-
-    public void setClaveVehicular(int claveVehicular) {
-        this.claveVehicular = claveVehicular;
     }
 
     public int getCapidadDeCarga() {

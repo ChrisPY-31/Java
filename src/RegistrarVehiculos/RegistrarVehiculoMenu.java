@@ -1,6 +1,7 @@
 package RegistrarVehiculos;
 
 import java.util.Scanner;
+import static NuevoPropietario.Propietario.*;
 
 public class RegistrarVehiculoMenu {
 
@@ -28,65 +29,76 @@ public class RegistrarVehiculoMenu {
 
     public static void IngresarPlaca() {
         String placa;
-        System.out.println();
-        System.out.println("*********Registro Vehicular*********");
-        System.out.println("Ingresa el numero de la placa: [LLLNNNN]");
-        placa = entrada.nextLine();
-        if (placa.length() == 7) {
-            for (int i = 0; i < placa.length(); i++) {
-                if (i >= 0 && i <= 2) {
-                    if (placa.charAt(i) < 65 || placa.charAt(i) > 90) {
-                        System.out.println("Los primeros 3 caracteres no son letras");
-                    }
-                } else if (i > 3 && i <= 6) {
-                    if (placa.charAt(i) < 48 || placa.charAt(i) > 57) {
-                        System.out.println("Los ultimos caracteres no son numeros");
+        boolean esValida;
+
+        do {
+            System.out.print("Introduce la placa del vehículo (3 letras y 4 números): ");
+            placa = entrada.nextLine();
+            esValida = true;
+
+            if (placa.length() == 7) {
+                for (int i = 0; i < placa.length(); i++) {
+                    if (i >= 0 && i <= 2) {
+                        if (placa.charAt(i) < 65 || placa.charAt(i) > 90) {
+                            System.out.println("Los primeros 3 caracteres no son letras.");
+                            esValida = false;
+                            break;
+                        }
+                    } else if (i > 3 && i <= 6) {
+                        if (placa.charAt(i) < 48 || placa.charAt(i) > 57) {
+                            System.out.println("Los últimos 4 caracteres no son números.");
+                            esValida = false;
+                            break;
+                        }
                     }
                 }
 
+                if (esValida) {
+                    showMarcaVehiculo();
+                }
+
+            } else {
+                System.out.println("La placa debe tener 7 caracteres.");
+                esValida = false;
             }
 
-            showMarcaVehiculo();
-        } else {
-            System.out.println("Estamos mal");
-        }
+        } while (!esValida);
     }
 
     public static void showMarcaVehiculo() {
         int opcion = 0;
         int k = 0;
-        do {
-            System.out.println("\n");
-            System.out.println("Elige el coche: ");
-            for (String miCarrito : MARCA) {
-                k++;
-                System.out.println(k + " ." + miCarrito);
-            }
-            System.out.println("0.-Return");
-            k = 0;
-            System.out.print("Elige el coche: ");
-            opcion = entrada.nextInt();
 
-            switch (opcion) {
-                case 1:
-                    showModeloVehiculo(mazda, MARCA[0]);
-                    break;
-                case 2:
-                    showModeloVehiculo(susuki, MARCA[1]);
+        System.out.println("\n");
+        System.out.println("Elige el coche: ");
+        for (String miCarrito : MARCA) {
+            k++;
+            System.out.println(k + " ." + miCarrito);
+        }
+        System.out.println("0.-Return");
+        k = 0;
+        System.out.print("Elige el coche: ");
+        opcion = entrada.nextInt();
 
-                    break;
-                case 3:
-                    showModeloVehiculo(hundai, MARCA[2]);
+        switch (opcion) {
+            case 1:
+                showModeloVehiculo(mazda, MARCA[0]);
+                break;
+            case 2:
+                showModeloVehiculo(susuki, MARCA[1]);
 
-                    break;
-                case 4:
-                    showModeloVehiculo(renault, MARCA[3]);
-                    break;
-                default:
+                break;
+            case 3:
+                showModeloVehiculo(hundai, MARCA[2]);
 
-                    opcion = 0;
-            }
-        } while (opcion != 0);
+                break;
+            case 4:
+                showModeloVehiculo(renault, MARCA[3]);
+                break;
+            default:
+                showMarcaVehiculo();
+
+        }
     }
 
     public static void showModeloVehiculo(String modelo[], String marca) {
@@ -102,7 +114,7 @@ public class RegistrarVehiculoMenu {
             }
             System.out.println("0.-Return");
 
-            System.out.println("Eliga la version del carro: " + marca);
+            System.out.println("Eliga el modelo del carro: " + marca);
             opcion = entrada.nextInt();
 
             if (opcion == 0) {
@@ -112,9 +124,27 @@ public class RegistrarVehiculoMenu {
 
                 do {
 
-                    System.out.println("La version que eliegiste es: " + modelo[opcion - 1] + " es correct \n1.-Correct 2.-Cambiar");
+                    System.out.println("El modelo que eliegiste es: " + modelo[opcion - 1] + " es correct \n1.-Correct 2.-Cambiar");
                     responseModelo = entrada.nextInt();
                     if (responseModelo == 1) {
+                        switch (marca) {
+                            case "Mazda":
+                                showVersionVehiculo(VERSIONMAZDA, marca, mazda);
+                                break;
+                            case "Susuki":
+                                showVersionVehiculo(VERSIONSUSUKI, marca, susuki);
+                                break;
+                            case "Hundai":
+                                showVersionVehiculo(VERSIONHUNDAI, marca, hundai);
+
+                                break;
+                            case "Renault":
+                                showVersionVehiculo(VERSIONRENAULT, marca, renault);
+                                break;
+                            default:
+                                System.out.println("Estas mal chavo");
+                        }
+
                         responseModelo = 2;
                         opcion = 0;
                     }
@@ -125,33 +155,14 @@ public class RegistrarVehiculoMenu {
 
         } while (opcion != 0);
 
-        switch (marca) {
-            case "Mazda":
-                showVersionVehiculo(VERSIONMAZDA, marca);
-                break;
-            case "Susuki":
-                showVersionVehiculo(VERSIONSUSUKI, marca);
-                break;
-            case "Hundai":
-                showVersionVehiculo(VERSIONHUNDAI, marca);
-
-                break;
-            case "Renault":
-                showVersionVehiculo(VERSIONRENAULT, marca);
-                break;
-            default:
-                System.out.println("Estas mal chavo");
-        }
-
     }
 
-    public static void showVersionVehiculo(String version[], String marca) {
+    public static void showVersionVehiculo(String version[], String marca, String modelo[]) {
         int opcion = 0;
         int positionVehicular = 0;
         int k = 0;
-        String versionAuto = "";
         int responseVersion = 0;
-        System.out.println("En version");
+        System.out.println("***********Elige la version del coche***********");
 
         do {
             for (String myVersion : version) {
@@ -163,56 +174,72 @@ public class RegistrarVehiculoMenu {
             System.out.print("Elige La version del coche: ");
             opcion = entrada.nextInt();
 
-            do {
-                System.out.println("la version " + version[opcion - 1] + ": Es correct\n1.-Correct 2.-Cambiar");
-                responseVersion = entrada.nextInt();
+            if (opcion == 0) {
+                showModeloVehiculo(modelo, marca);
 
-                if (responseVersion == 1) {
-                    versionAuto = versionAuto + version[opcion - 1];
-                    positionVehicular = opcion - 1;
-                    responseVersion = 2;
-                    opcion = 0;
-                }
-                k = 0;
-            } while (responseVersion != 2);
+            } else {
+
+                do {
+                    System.out.println("la version " + version[opcion - 1] + ": Es correct\n1.-Correct 2.-Cambiar");
+                    responseVersion = entrada.nextInt();
+
+                    if (responseVersion == 1) {
+                        positionVehicular = opcion - 1;
+                        switch (marca) {
+                            case "Mazda":
+                                precioCar(PRECIOMAZDA, positionVehicular);
+                                break;
+                            case "Susuki":
+                                precioCar(PRECIOSUSUKI, positionVehicular);
+
+                                break;
+                            case "Hundai":
+                                precioCar(PRECIOHUNDAI, positionVehicular);
+
+
+                                break;
+                            case "Renault":
+                                precioCar(PRECIORENAULT, positionVehicular);
+
+                                break;
+                            default:
+                                System.out.println("Estas mal chavo");
+                        }
+
+                        responseVersion = 2;
+                        opcion = 0;
+                    }
+                    k = 0;
+                } while (responseVersion != 2);
+            }
+
 
         } while (opcion != 0);
-
-        switch (marca) {
-            case "Mazda":
-                precioCar(PRECIOMAZDA, versionAuto ,marca , positionVehicular);
-                break;
-            case "Susuki":
-                precioCar(PRECIOSUSUKI ,versionAuto ,marca , positionVehicular);
-
-                break;
-            case "Hundai":
-                precioCar(PRECIOHUNDAI ,versionAuto ,marca , positionVehicular);
-
-
-                break;
-            case "Renault":
-                precioCar(PRECIORENAULT,versionAuto ,marca , positionVehicular);
-
-                break;
-            default:
-                System.out.println("Estas mal chavo");
-        }
 
 
     }
 
-    public static void precioCar(int precio[], String version , String marca , int positionVehicular) {
-        int opcion = 0;
+    public static void precioCar(int precio[], int positionVehicular) {
 
-            System.out.println("El precio es: " + precio[positionVehicular]);
-            System.out.println("Deseas cambiar de version: ");
-            System.out.println("1 = si , 2 = no ");
-            opcion = entrada.nextInt();
+        int registroFinalizado;
+        System.out.println("El precio es: " + precio[positionVehicular]);
+        System.out.println("Deseas continucar con el Registro\n1-Si 2.-No");
+        registroFinalizado = entrada.nextInt();
 
-            if(opcion == 1) {
-                System.out.println("Auto Agregado correctamente");
-            }
+        switch (registroFinalizado) {
+            case 1:
+                Propietario();
+                break;
+
+            case 2:
+                IngresarPlaca();
+                break;
+
+            default:
+                System.out.println("Adiosssssssssssss chaval");
+        }
+
+
 
     }
 }
